@@ -1,7 +1,5 @@
-<!DOCTYPE html>
 <div class="flex bg-gray-200 items-center justify-center h-screen">
     <div class="flex bg-white max-w-2xl w-full shadow-xl p-6 rounded-xl">
-
         <div class="flex items-start gap-8">
             <img [src]="cvData.image" alt="Profile"
                 class="w-[100px] h-[100px] rounded-full border-4 border-blue-500 object-cover overflow-hidden" />
@@ -21,15 +19,55 @@
             <div class="mt-4">
                 <h2 class="font-semibold text-lg">Tech Stack</h2>
                 <div class="flex gap-2 mt-2 flex-wrap">
-                    @for (tech of cvData.techStack; track $index) {
+                    @for (tech of cvData.techStack; track tech) {
                     <span class="bg-blue-600 text-white px-3 py-1 rounded-full text-sm">
                         {{ tech }}
                     </span>
                     }
                 </div>
 
-                <div class="flex border-t-4 border-gray-100 pt-4 border-w">
-                    <h2 class="text-2xl">todo list</h2>
+                <div class="flex flex-col mt-6">
+                    <h2 class="text-2xl font-semibold mb-2">Todo List</h2>
+
+                    <div class="flex gap-2 mb-4">
+                        <input type="text" [(ngModel)]="newTodo" placeholder="Tambah todo"
+                            class="border border-gray-300 rounded px-2 py-1 flex-1" />
+                        <button (click)="addTodo()"
+                            class="bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600 transition-colors">
+                            Add
+                        </button>
+                    </div>
+
+                    <ul class="list-none list-inside space-y-2">
+                        @for (todo of todos; track todo.id) {
+                        <li class="flex items-center justify-between p-2 rounded hover:bg-gray-50">
+                            <div class="flex items-center gap-3 flex-1">
+                                <input type="checkbox" [checked]="todo.completed" (change)="toggleTodo(todo.id)"
+                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2">
+
+                                <span [class.line-through]="todo.completed" [class.text-gray-400]="todo.completed"
+                                    class="text-gray-800">
+                                    {{ todo.text }}
+                                </span>
+                            </div>
+
+                            <button (click)="removeTodo(todo.id)"
+                                class="text-red-500 hover:text-red-700 ml-2 text-sm transition-colors">
+                                Remove
+                            </button>
+                        </li>
+                        } @empty {
+                        <li class="text-gray-500 py-2">Kosong</li>
+                        }
+                    </ul>
+
+                    @if (todos.length > 0) {
+                    <div class="mt-4 pt-4 border-t border-gray-200">
+                        <p class="text-sm text-gray-600">
+                            Completed: {{ getCompletedCount() }}/{{ todos.length }}
+                        </p>
+                    </div>
+                    }
                 </div>
             </div>
         </div>

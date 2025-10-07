@@ -8,3 +8,9 @@ export interface ProfileModel {
   image?: string;
   techStack?: string[];
 }
+
+export interface TodoItem {
+  id: number;
+  text: string;
+  completed: boolean;
+}
