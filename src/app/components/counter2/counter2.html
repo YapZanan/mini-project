@@ -1,0 +1,32 @@
+<div class="bg-white p-6 rounded-lg shadow-lg max-w-md mx-auto">
+    <h2 class="text-2xl font-bold text-center mb-6 text-gray-800">Counter</h2>
+
+    <div class="text-center mb-6">
+        <span class="text-6xl font-bold" [class.text-green-600]="counter > 0" [class.text-red-600]="counter < 0"
+            [class.text-gray-600]="counter === 0">
+            {{ counter }}
+        </span>
+    </div>
+
+    <div class="flex gap-2 mb-4 justify-center">
+        <button (click)="increment(10)"
+            class="bg-gray-100 hover:bg-gray-200 text-black px-4 py-2 rounded-lg transition-colors font-semibold">
+            +10
+        </button>
+        <button (click)="increment(2)"
+            class="bg-gray-100 hover:bg-gray-200 text-black px-4 py-2 rounded-lg transition-colors font-semibold">
+            +2
+        </button>
+        <button (click)="increment(1)"
+            class="bg-gray-100 hover:bg-gray-200 text-black px-4 py-2 rounded-lg transition-colors font-semibold">
+            +1
+        </button>
+    </div>
+
+    <div class="text-center">
+        <button (click)="reset()"
+            class="bg-gray-300 hover:bg-gray-400 text-gray-700 px-4 py-2 rounded-lg transition-colors">
+            Reset
+        </button>
+    </div>
+</div>

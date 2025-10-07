@@ -3,15 +3,18 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Profile } from '../../services/profile';
 import { ProfileModel, TodoItem } from '../../utils/profile.model';
+import { CounterComponent } from '../counter/counter';
+import { CounterComponent2 } from '../counter2/counter2';
 
 @Component({
   selector: 'app-cv',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, CounterComponent, CounterComponent2],
   templateUrl: './cv.html',
   styleUrls: ['./cv.css'],
 })
 export class Cv {
+  [x: string]: any;
   cvData: ProfileModel;
 
   newTodo = '';
