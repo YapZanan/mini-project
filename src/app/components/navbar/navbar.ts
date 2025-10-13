@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, computed } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { NavbarService } from '../../services/navbar.service';
 import { NavLink } from '../../utils/nav-link.model';
@@ -15,13 +15,12 @@ import { CartService } from '../../services/cart/cart.service';
 export class Navbar implements OnInit {
   links: NavLink[] = [];
   isLoggedIn = false;
-  cartCount = signal(0);
   private authService = inject(AuthService);
   private cartService = inject(CartService);
+  cartCount = computed(() => this.cartService.getCartCount());
 
   constructor(private navbarService: NavbarService) {
     this.updateNavLinks();
-    this.cartCount.set(this.cartService.getCartCount());
   }
 
   ngOnInit(): void {
