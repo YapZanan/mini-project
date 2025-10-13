@@ -1,12 +1,12 @@
 import { ChangeDetectorRef, Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LoginService } from '../../../services/auth/login';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { sign } from 'crypto';
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterModule],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
@@ -22,6 +22,7 @@ export class Login {
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(6)]],
   });
+
   async onSubmit(): Promise<void> {
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
@@ -32,18 +33,15 @@ export class Login {
     if (!email || !password) return;
 
     this.errorMessage = '';
+    this.loading.set(true);
 
     try {
       await this.loginService.login(email, password);
       this.loginForm.reset();
-      this.loading.set(true);
       this.router.navigate(['/pokemon']);
     } catch (error: any) {
-      console.log('sadasdsad');
       this.errorMessage = error?.message || 'Login failed. Please try again.';
-      this.loading.set(false);
     } finally {
-      console.log('sadasdsad');
       this.loading.set(false);
     }
   }

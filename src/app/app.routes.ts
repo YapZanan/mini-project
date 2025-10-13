@@ -4,6 +4,8 @@ import { Layout } from './components/layout/layout';
 import { CounterComponent } from './components/counter/counter';
 import { PokemonList } from './components/pokemon/pokemon-list';
 import { PokemonDetails } from './components/pokemon/detail/detail';
+import { PokemonGacha } from './components/pokemon/gacha/gacha';
+import { Cart } from './components/cart/cart';
 
 import { RegisterComponent } from './components/auth/register/register';
 import { Login } from './components/auth/login/login';
@@ -45,6 +47,14 @@ export const routes: Routes = [
       {
         path: 'pokemon/:id',
         component: PokemonDetails,
+      },
+      {
+        path: 'gatcha',
+        component: PokemonGacha,
+      },
+      {
+        path: 'cart',
+        component: Cart,
       },
     ],
   },

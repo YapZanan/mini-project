@@ -19,6 +19,7 @@ export class PokemonList implements OnInit {
   private _searchTerm = signal<string>('');
   page = signal<number>(0);
   pageSize = 24;
+  isLoading = signal<boolean>(false);
 
   get search() {
     return this._searchTerm();
@@ -60,14 +61,18 @@ export class PokemonList implements OnInit {
   }
 
   async nextPage() {
+    this.isLoading.set(true);
     this.page.update((v) => v + 1);
     await this.loadPage();
+    this.isLoading.set(false);
   }
 
   async prevPage() {
     if (this.page() > 0) {
+      this.isLoading.set(true);
       this.page.update((v) => v - 1);
       await this.loadPage();
+      this.isLoading.set(false);
     }
   }
 }

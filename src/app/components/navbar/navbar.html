@@ -1,14 +1,47 @@
-<!DOCTYPE html>
-<div class="bg-gradient-to-b from-blue-600 to-blue-400 text-white w-full shadow-md">
-    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-        <h1 class="text-xl font-bold">Pokemon</h1>
-        <nav class="space-x-6 flex">
-            @for (link of links; track link.path) {
-            <a [routerLink]="link.path" routerLinkActive="active"
-                class="hover:underline transition-colors duration-200">
-                {{ link.label }}
-            </a>
+<div class="bg-white w-full shadow-lg border-b border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+        <div class="flex items-center space-x-8">
+            <h1 class="text-2xl font-bold text-gray-800">Pokemon App</h1>
+            <nav class="hidden md:flex space-x-6">
+                @for (link of links; track link.path) {
+                <a [routerLink]="link.path" routerLinkActive="bg-blue-500 text-white"
+                    [routerLinkActiveOptions]="{ exact: link.path === '/' }"
+                    class="px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 hover:bg-gray-100 hover:text-gray-800 text-gray-600 relative">
+                    {{ link.label }}
+                    @if (link.path === '/cart' && cartCount() > 0) {
+                    <span
+                        class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                        {{ cartCount() }}
+                    </span>
+                    }
+                </a>
+                }
+            </nav>
+        </div>
+
+        <div class="flex items-center space-x-4">
+            @if (isLoggedIn) {
+            <button (click)="logout()"
+                class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 flex items-center space-x-2 shadow hover:shadow-md">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1">
+                    </path>
+                </svg>
+                <span>Logout</span>
+            </button>
+            } @else {
+            <div class="flex space-x-3">
+                <a routerLink="/login"
+                    class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 shadow hover:shadow-md">
+                    Login
+                </a>
+                <a routerLink="/register"
+                    class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 shadow hover:shadow-md">
+                    Register
+                </a>
+            </div>
             }
-        </nav>
+        </div>
     </div>
 </div>

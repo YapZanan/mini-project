@@ -39,7 +39,7 @@ export class RegisterComponent {
     try {
       await this.registerService.register(email, password);
       this.registerForm.reset();
-      this.router.navigate(['/register']);
+      this.router.navigate(['/login']);
     } catch (error: any) {
       this.errorMessage = error?.message || 'Registration failed. Please try again.';
     } finally {

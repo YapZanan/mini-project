@@ -5,11 +5,12 @@ import { Profile } from '../../services/profile';
 import { ProfileModel, TodoItem } from '../../utils/profile.model';
 import { CounterComponent } from '../counter/counter';
 import { CounterComponent2 } from '../counter2/counter2';
+import { LazyImageDirective } from '../../shared/directives/lazy-image.directive';
 
 @Component({
   selector: 'app-cv',
   standalone: true,
-  imports: [CommonModule, FormsModule, CounterComponent, CounterComponent2],
+  imports: [CommonModule, FormsModule, CounterComponent, CounterComponent2, LazyImageDirective],
   templateUrl: './cv.html',
   styleUrls: ['./cv.css'],
 })

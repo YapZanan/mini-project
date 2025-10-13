@@ -101,4 +101,25 @@ export class PokemonService {
       return null;
     }
   }
+  async getRandomPokemon(): Promise<Pokemon | null> {
+    try {
+      const listResponse = await firstValueFrom(
+        this.http.get<PokemonListResponse>(`${this.url}?limit=1`)
+      );
+      const totalCount = listResponse.count;
+
+      const randomId = Math.floor(Math.random() * totalCount) + 1;
+
+      const details: any = await firstValueFrom(this.http.get(`${this.url}/${randomId}`));
+      return {
+        id: details.id,
+        name: details.name,
+        sprite: details.sprites.front_default,
+        types: details.types.map((t: any) => t.type.name),
+      } as Pokemon;
+    } catch (error) {
+      console.error('Error fetching random Pokémon:', error);
+      return null;
+    }
+  }
 }

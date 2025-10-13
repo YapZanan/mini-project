@@ -1,12 +1,13 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { CommonModule, NgFor } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { PokemonService } from '../../../services/pokemon/PokemonService';
+import { LazyImageDirective } from '../../../shared/directives/lazy-image.directive';
 
 @Component({
   selector: 'app-pokemon-details',
   standalone: true,
-  imports: [CommonModule, RouterModule, NgFor],
+  imports: [CommonModule, RouterModule, LazyImageDirective],
   templateUrl: './detail.html',
 })
 export class PokemonDetails implements OnInit {

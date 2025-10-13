@@ -7,7 +7,7 @@
   <app-pokemon-grid [pokemon]="search || selectedType() ? filteredPokemon() : allPokemon()"></app-pokemon-grid>
 
   @if (!search && !selectedType()) {
-  <app-pagination-controls [page]="page()" (next)="nextPage()" (prev)="prevPage()"
-    [disablePrev]="page() === 0"></app-pagination-controls>
+  <app-pagination-controls [page]="page()" (next)="nextPage()" (prev)="prevPage()" [disablePrev]="page() === 0"
+    [isLoading]="isLoading()"></app-pagination-controls>
   }
 </div>

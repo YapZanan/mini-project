@@ -1,11 +1,11 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { NgFor, TitleCasePipe } from '@angular/common';
+import { TitleCasePipe } from '@angular/common';
 
 @Component({
   selector: 'app-pokemon-filter-bar',
   standalone: true,
-  imports: [FormsModule, NgFor, TitleCasePipe],
+  imports: [FormsModule, TitleCasePipe],
   templateUrl: './pokemon-filter-bar.html',
 })
 export class PokemonFilterBar {

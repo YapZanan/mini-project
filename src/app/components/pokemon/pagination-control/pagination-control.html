@@ -1,13 +1,24 @@
 <div class="flex justify-between items-center mt-8">
     <button class="px-5 py-2 bg-gray-200 rounded-lg shadow hover:bg-gray-300 disabled:opacity-50 transition"
-        (click)="prev.emit()" [disabled]="disablePrev">
+        (click)="prev.emit()" [disabled]="disablePrev || isLoading">
+        @if (isLoading && page === 0) {
+        <span class="inline-block animate-spin rounded-full h-4 w-4 border-b-2 border-gray-700 mr-2"></span>
+        }
         Prev
     </button>
 
-    <span class="font-semibold text-gray-700">Page {{ page + 1 }}</span>
+    <div class="flex items-center gap-2">
+        <span class="font-semibold text-gray-700">Page {{ page + 1 }}</span>
+        @if (isLoading) {
+        <span class="inline-block animate-spin rounded-full h-4 w-4 border-b-2 border-blue-500"></span>
+        }
+    </div>
 
-    <button class="px-5 py-2 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600 transition"
-        (click)="next.emit()">
+    <button class="px-5 py-2 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600 disabled:opacity-50 transition"
+        (click)="next.emit()" [disabled]="isLoading">
         Next
+        @if (isLoading && page > 0) {
+        <span class="inline-block animate-spin rounded-full h-4 w-4 border-b-2 border-white ml-2"></span>
+        }
     </button>
 </div>
