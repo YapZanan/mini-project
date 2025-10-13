@@ -78,7 +78,6 @@ export class LazyImageDirective implements OnInit, OnDestroy {
   }
 
   private loadImage(): void {
-    // If no image source is provided, show error state
     if (!this.imageSrc) {
       this.handleImageState('error');
       return;
@@ -88,7 +87,6 @@ export class LazyImageDirective implements OnInit, OnDestroy {
     this.renderer.removeClass(this.elementRef.nativeElement, 'opacity-50');
     this.renderer.addClass(this.elementRef.nativeElement, 'opacity-70');
 
-    // Create an observable for image loading with RxJS
     of(this.imageSrc)
       .pipe(
         switchMap((src) => {
@@ -107,7 +105,7 @@ export class LazyImageDirective implements OnInit, OnDestroy {
 
             img.onload = loadHandler;
             img.onerror = errorHandler;
-            img.src = src!; // Non-null assertion since we checked above
+            img.src = src!;
 
             return () => {
               img.onload = null;
@@ -115,7 +113,7 @@ export class LazyImageDirective implements OnInit, OnDestroy {
             };
           });
         }),
-        debounceTime(100), // Small debounce to prevent rapid state changes
+        debounceTime(100),
         catchError(() => of('error' as ImageLoadingState)),
         takeUntil(this.destroy$)
       )
@@ -129,7 +127,6 @@ export class LazyImageDirective implements OnInit, OnDestroy {
 
     switch (state) {
       case 'loaded':
-        // Use non-null assertion since we check for imageSrc in loadImage()
         this.renderer.setAttribute(this.elementRef.nativeElement, 'src', this.imageSrc!);
         this.renderer.removeClass(this.elementRef.nativeElement, 'opacity-70');
         this.renderer.addClass(this.elementRef.nativeElement, 'transition-opacity');
@@ -144,18 +141,15 @@ export class LazyImageDirective implements OnInit, OnDestroy {
         break;
 
       case 'loading':
-        // Keep the placeholder while loading
         this.renderer.addClass(this.elementRef.nativeElement, 'opacity-70');
         break;
     }
   }
 
-  // Public method to manually trigger loading (useful for testing)
   load(): void {
     this.loadImage();
   }
 
-  // Public method to get current loading state
   getLoadingState(): Observable<ImageLoadingState> {
     return this.loadingState$.asObservable();
   }
