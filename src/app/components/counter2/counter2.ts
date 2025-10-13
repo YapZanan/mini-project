@@ -7,32 +7,14 @@ import { CommonModule } from '@angular/common';
   templateUrl: './counter2.html',
   styleUrl: './counter2.css',
 })
-export class CounterComponent2 implements OnDestroy {
+export class CounterComponent2 {
   counter = 0;
-  isPlaying = false;
-  private intervalId: any;
-
-  constructor(private cdr: ChangeDetectorRef) {}
 
   increment(value: number) {
     this.counter += value;
   }
 
-  pause() {
-    this.isPlaying = false;
-    if (this.intervalId) {
-      clearInterval(this.intervalId);
-      this.intervalId = null;
-    }
-    this.cdr.detectChanges();
-  }
-
   reset() {
-    this.pause();
     this.counter = 0;
-    this.cdr.detectChanges();
-  }
-  ngOnDestroy() {
-    this.pause();
   }
 }

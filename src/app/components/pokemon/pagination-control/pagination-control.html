@@ -1,0 +1,13 @@
+<div class="flex justify-between items-center mt-8">
+    <button class="px-5 py-2 bg-gray-200 rounded-lg shadow hover:bg-gray-300 disabled:opacity-50 transition"
+        (click)="prev.emit()" [disabled]="disablePrev">
+        Prev
+    </button>
+
+    <span class="font-semibold text-gray-700">Page {{ page + 1 }}</span>
+
+    <button class="px-5 py-2 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600 transition"
+        (click)="next.emit()">
+        Next
+    </button>
+</div>

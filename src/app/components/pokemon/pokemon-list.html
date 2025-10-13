@@ -1,0 +1,13 @@
+<div class="p-6 bg-gray-50 min-h-screen">
+  <h2 class="text-2xl font-bold mb-6 text-center text-gray-800">Pokemon List</h2>
+
+  <app-pokemon-filter-bar [types]="types()" [(search)]="search"
+    [(selectedType)]="selectedType"></app-pokemon-filter-bar>
+
+  <app-pokemon-grid [pokemon]="search || selectedType() ? filteredPokemon() : allPokemon()"></app-pokemon-grid>
+
+  @if (!search && !selectedType()) {
+  <app-pagination-controls [page]="page()" (next)="nextPage()" (prev)="prevPage()"
+    [disablePrev]="page() === 0"></app-pagination-controls>
+  }
+</div>

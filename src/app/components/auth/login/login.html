@@ -1,0 +1,83 @@
+<div
+    class="min-h-screen flex items-center justify-center bg-gradient-to-b from-orange-100 to-red-100 relative overflow-hidden">
+    <div class="absolute inset-0 flex items-center justify-center opacity-10 pointer-events-none">
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png"
+            alt="Pokéball background" class="w-96 h-96 animate-spin-slow" />
+    </div>
+
+    <div
+        class="bg-white/90 backdrop-blur-md shadow-2xl rounded-3xl p-8 w-full max-w-md relative border-4 border-orange-400">
+        <div class="flex justify-center mb-4">
+            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png" alt="Charmander"
+                class="w-16 h-16 drop-shadow-md animate-bounce" />
+        </div>
+
+        <h2 class="text-3xl font-extrabold text-center text-orange-600 mb-6">
+            Welcome Back, Trainer!
+        </h2>
+
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-5" autocomplete="off">
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-1">Trainer Email</label>
+                <input formControlName="email" type="email" placeholder="ash.ketchum@pokemon.com"
+                    class="w-full rounded-lg border-2 border-orange-300 px-4 py-2 focus:ring-2 focus:ring-orange-400 focus:outline-none" />
+                @if (email?.invalid && email?.touched) {
+                <p class="text-sm text-red-500 mt-1">
+                    @if (email?.errors?.['required']) {
+                    Email is required.
+                    } @else {
+                    Please enter a valid email.
+                    }
+                </p>
+                }
+            </div>
+
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-1">Trainer Password</label>
+                <input formControlName="password" type="password" placeholder="••••••••"
+                    class="w-full rounded-lg border-2 border-orange-300 px-4 py-2 focus:ring-2 focus:ring-orange-400 focus:outline-none" />
+                @if (password?.invalid && password?.touched) {
+                <p class="text-sm text-red-500 mt-1">
+                    @if (password?.errors?.['required']) {
+                    Password is required.
+                    } @else {
+                    Minimum 6 characters.
+                    }
+                </p>
+                }
+            </div>
+
+            @if (errorMessage) {
+            <p class="text-center text-sm text-red-600 font-semibold">
+                {{ errorMessage }}
+            </p>
+            }
+
+            <button type="submit" [disabled]="loginForm.invalid || loading()"
+                class="w-full bg-orange-500 text-white font-bold py-2 rounded-lg hover:bg-orange-600 transition disabled:opacity-60 border-2 border-orange-600">
+                @if (!loading()) {
+                <div class="flex items-center justify-center space-x-2">
+                    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png"
+                        alt="Pokéball" class="w-5 h-5 animate-spin-slow" />
+                    <span>Login as Trainer</span>
+                </div>
+                } @else {
+                <div class="flex items-center justify-center space-x-2">
+                    <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
+                        </circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+                    </svg>
+                    <span>Logging in...</span>
+                </div>
+                }
+            </button>
+        </form>
+
+        <p class="text-center text-sm text-gray-600 mt-6">
+            Don’t have an account yet?
+            <a routerLink="/register" class="text-orange-600 font-semibold hover:underline">Sign up now</a>
+        </p>
+    </div>
+</div>

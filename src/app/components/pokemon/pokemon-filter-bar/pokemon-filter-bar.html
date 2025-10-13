@@ -1,0 +1,14 @@
+<div class="flex flex-col sm:flex-row gap-4 mb-6">
+    <input type="text" placeholder="Search"
+        class="flex-1 p-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition"
+        [(ngModel)]="search" (ngModelChange)="searchChange.emit($event)" />
+
+    <select
+        class="p-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition"
+        [(ngModel)]="selectedType" (ngModelChange)="selectedTypeChange.emit($event)">
+        <option value="">All Types</option>
+        <option *ngFor="let type of types" [value]="type">
+            {{ type | titlecase }}
+        </option>
+    </select>
+</div>
