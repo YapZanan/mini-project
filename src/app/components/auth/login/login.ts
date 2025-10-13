@@ -3,6 +3,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LoginService } from '../../../services/auth/login';
 import { Router, RouterModule } from '@angular/router';
 import { sign } from 'crypto';
+import { CanComponentDeactivate } from '../../guard/canDeactivate.guard';
 
 @Component({
   selector: 'app-login',
@@ -10,7 +11,7 @@ import { sign } from 'crypto';
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
-export class Login {
+export class Login implements CanComponentDeactivate {
   private readonly loginFormBuilder = inject(FormBuilder);
   private readonly loginService = inject(LoginService);
   loading = signal<boolean>(false);
@@ -52,5 +53,12 @@ export class Login {
 
   get password() {
     return this.loginForm.get('password');
+  }
+
+  canDeactivate(): boolean {
+    if (this.loginForm.dirty) {
+      return confirm('You have unsaved login form changes. Are you sure you want to leave?');
+    }
+    return true;
   }
 }

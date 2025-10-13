@@ -42,6 +42,7 @@ export class Navbar implements OnInit {
 
   logout(): void {
     this.authService.logout();
+    this.cartService.clearCart();
     this.isLoggedIn = false;
   }
 }

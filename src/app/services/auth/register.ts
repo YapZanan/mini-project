@@ -25,13 +25,32 @@ export class RegisterService {
 
       return user;
     } catch (error: any) {
-      if (error.code === 'auth/email-already-in-use') {
-        console.error('Email already exists.');
-        throw new Error('This email is already registered. Please log in instead.');
-      } else {
-        console.error('Registration failed:', error);
-        throw new Error('Registration failed. Please try again.');
+      console.error('Registration failed:', error);
+
+      let userFriendlyMessage = 'Registration failed. Please try again.';
+
+      switch (error.code) {
+        case 'auth/email-already-in-use':
+          userFriendlyMessage = 'This email is already registered. Please log in instead.';
+          break;
+        case 'auth/invalid-email':
+          userFriendlyMessage = 'Invalid email address. Please check your email.';
+          break;
+        case 'auth/operation-not-allowed':
+          userFriendlyMessage = 'Email/password accounts are not enabled. Please contact support.';
+          break;
+        case 'auth/weak-password':
+          userFriendlyMessage = 'Password is too weak. Please use a stronger password.';
+          break;
+        case 'auth/network-request-failed':
+          userFriendlyMessage = 'Network error. Please check your internet connection.';
+          break;
+        case 'auth/too-many-requests':
+          userFriendlyMessage = 'Too many requests. Please try again later.';
+          break;
       }
+
+      throw new Error(userFriendlyMessage);
     }
   }
 }

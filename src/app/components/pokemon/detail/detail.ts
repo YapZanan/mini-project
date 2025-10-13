@@ -75,10 +75,6 @@ export class PokemonDetails implements OnInit {
     });
   }
 
-  loadEvolution(name: string) {
-    this.router.navigate(['/pokemon', name]);
-  }
-
   preloadSprites(sprites: any) {
     if (!this.isBrowser) return;
     const urls = [sprites.front_default, sprites.front_shiny];

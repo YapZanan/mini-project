@@ -27,9 +27,37 @@ export class LoginService {
 
       this.authService.setAuthenticated(true);
       console.log('User logged in successfully:', user.email);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error during login:', error);
-      throw error;
+
+      let userFriendlyMessage = 'Login failed. Please try again.';
+
+      switch (error.code) {
+        case 'auth/invalid-email':
+          userFriendlyMessage = 'Invalid email address. Please check your email.';
+          break;
+        case 'auth/user-disabled':
+          userFriendlyMessage = 'This account has been disabled. Please contact support.';
+          break;
+        case 'auth/user-not-found':
+          userFriendlyMessage =
+            'No account found with this email. Please check your email or register.';
+          break;
+        case 'auth/wrong-password':
+          userFriendlyMessage = 'Incorrect password. Please try again.';
+          break;
+        case 'auth/too-many-requests':
+          userFriendlyMessage = 'Too many failed attempts. Please try again later.';
+          break;
+        case 'auth/network-request-failed':
+          userFriendlyMessage = 'Network error. Please check your internet connection.';
+          break;
+        case 'auth/invalid-credential':
+          userFriendlyMessage = 'Invalid credentials. Please check your email and password.';
+          break;
+      }
+
+      throw new Error(userFriendlyMessage);
     }
   }
 }

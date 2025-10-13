@@ -102,24 +102,38 @@ export class PokemonService {
     }
   }
   async getRandomPokemon(): Promise<Pokemon | null> {
-    try {
-      const listResponse = await firstValueFrom(
-        this.http.get<PokemonListResponse>(`${this.url}?limit=1`)
-      );
-      const totalCount = listResponse.count;
+    const maxAttempts = 5;
+    let attempts = 0;
 
-      const randomId = Math.floor(Math.random() * totalCount) + 1;
+    while (attempts < maxAttempts) {
+      try {
+        const listResponse = await firstValueFrom(
+          this.http.get<PokemonListResponse>(`${this.url}?limit=1`)
+        );
+        const totalCount = listResponse.count;
 
-      const details: any = await firstValueFrom(this.http.get(`${this.url}/${randomId}`));
-      return {
-        id: details.id,
-        name: details.name,
-        sprite: details.sprites.front_default,
-        types: details.types.map((t: any) => t.type.name),
-      } as Pokemon;
-    } catch (error) {
-      console.error('Error fetching random Pokémon:', error);
-      return null;
+        const randomId = Math.floor(Math.random() * totalCount) + 1;
+
+        const details: any = await firstValueFrom(this.http.get(`${this.url}/${randomId}`));
+        return {
+          id: details.id,
+          name: details.name,
+          sprite: details.sprites.front_default,
+          types: details.types.map((t: any) => t.type.name),
+        } as Pokemon;
+      } catch (error: any) {
+        attempts++;
+        console.warn(`Attempt ${attempts}: Pokémon not found, rerolling...`, error.message);
+
+        if (attempts >= maxAttempts) {
+          console.error('Failed to find a valid Pokémon after', maxAttempts, 'attempts');
+          return null;
+        }
+
+        await new Promise((resolve) => setTimeout(resolve, 100));
+      }
     }
+
+    return null;
   }
 }
