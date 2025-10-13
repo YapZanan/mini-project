@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { RegisterService } from '../../../services/auth/register';
 import { Router, RouterModule } from '@angular/router';
@@ -13,10 +13,11 @@ import { Router, RouterModule } from '@angular/router';
 export class RegisterComponent {
   private readonly registerFormBuilder = inject(FormBuilder);
   private readonly registerService = inject(RegisterService);
+  loading = signal<boolean>(false);
 
   constructor(private router: Router) {}
 
-  loading = false;
+  // loading = false;
   errorMessage = '';
 
   registerForm = this.registerFormBuilder.group({
@@ -33,7 +34,8 @@ export class RegisterComponent {
     const { email, password } = this.registerForm.value;
     if (!email || !password) return;
 
-    this.loading = true;
+    this.loading.set(true);
+
     this.errorMessage = '';
 
     try {
@@ -43,7 +45,7 @@ export class RegisterComponent {
     } catch (error: any) {
       this.errorMessage = error?.message || 'Registration failed. Please try again.';
     } finally {
-      this.loading = false;
+      this.loading.set(false);
     }
   }
 

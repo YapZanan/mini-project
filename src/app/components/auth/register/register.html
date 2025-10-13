@@ -52,9 +52,9 @@
             </p>
             }
 
-            <button type="submit" [disabled]="registerForm.invalid || loading"
+            <button type="submit" [disabled]="registerForm.invalid || loading()"
                 class="w-full bg-yellow-400 text-gray-800 font-bold py-2 rounded-lg hover:bg-yellow-500 transition disabled:opacity-60 border-2 border-yellow-500">
-                @if (!loading) {
+                @if (!loading()) {
                 <div class="flex items-center justify-center space-x-2">
                     <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png"
                         alt="Pokéball" class="w-5 h-5 animate-spin-slow" />

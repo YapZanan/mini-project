@@ -13,7 +13,10 @@ import { RouterModule } from '@angular/router';
 })
 export class Cart {
   private cartService = inject(CartService);
-  cartItems = computed(() => this.cartService.getCartItems()());
+  cartItems = computed(() => {
+    const items = this.cartService.getCartItems()();
+    return [...items].reverse();
+  });
 
   removeFromCart(pokemonId: number): void {
     this.cartService.removeFromCart(pokemonId);
